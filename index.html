@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumabittv - Your Hub for Entertainment & News</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        // Custom Tailwind Configuration (Deep Blue/Navy Palette)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#006699',      /* Primary Accent (Medium Blue) */
+                        'dark-navy': '#001A33',         /* Darkest for footer/headlines/text */
+                        'light-slate': '#DDEEFF',       /* Lighter Blue/Slate for section backgrounds */
+                        'off-white': '#F5F8FB',         /* Main background */
+                        'talent-orange': '#FF8C00',     /* Floating Icon color */
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'heading': ['Montserrat', 'sans-serif'] 
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* FONT STYLES */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F8FB; 
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Hero Section Gradient Background */
+        .hero-gradient-bg {
+            background: linear-gradient(135deg, #006699, #001A33); 
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            animation: moveGradient 15s infinite linear;
+        }
+        @keyframes moveGradient {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50%, 50%); }
+        }
+
+        /* Custom Logo Image Styling */
+        .kumabit-logo-img {
+            height: 56px; 
+            width: auto; 
+            object-fit: contain;
+            margin-right: 10px;
+        }
+
+        /* Footer Logo Styling */
+        .footer-talentronaut-logo {
+            height: 20px; 
+            width: auto;
+            object-fit: contain;
+            filter: brightness(1.5); 
+            margin-left: 8px;
+        }
+        
+        /* FLOATING TALENTRONAUT ICON */
+        .float-talentronaut {
+            position: fixed;
+            bottom: 1.5rem; 
+            right: 1.5rem; 
+            z-index: 50;
+            animation: float 4s ease-in-out infinite;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Modern Scroll Reveal Animation */
+        .hidden-item {
+            opacity: 0;
+            filter: blur(2px);
+            transform: translateY(20px);
+            transition: all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1);
+        }
+        .show-item {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* Custom text selection color */
+        ::selection {
+            background: #006699; 
+            color: #F5F8FB;     
+        }
+    </style>
+</head>
+
+<body class="bg-off-white text-gray-800 antialiased overflow-x-hidden">
+
+    <a href="https://www.talentronaut.in/" target="_blank"
+        class="float-talentronaut p-3 bg-talent-orange rounded-full shadow-2xl hover:scale-105 transition duration-300"
+        aria-label="Promoting Talentronaut - click to visit Talentronaut website">
+        
+        <img src="logo.jpg" alt="Talentronauts Logo" class="h-6 w-6 object-contain">
+    </a>
+
+    <header class="sticky top-0 z-40 bg-off-white/95 backdrop-blur-md shadow-sm border-b border-primary-blue/30">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            
+            <div class="flex items-center">
+                <a href="#hero" class="flex items-center group">
+                    
+                    <img src="main.png" alt="Kumabittv Logo" class="kumabit-logo-img">
+                    <span class="text-3xl font-heading font-extrabold text-dark-navy transition duration-300">Kumabittv</span>
+                </a>
+            </div>
+
+            <div class="hidden md:flex space-x-8 text-lg font-semibold">
+                <a href="#featured-news" class="text-dark-navy hover:text-primary-blue transition duration-300">News</a>
+                <a href="#entertainment-spotlight" class="text-dark-navy hover:text-primary-blue transition duration-300">Entertainment</a>
+                <a href="#about-us" class="text-dark-navy hover:text-primary-blue transition duration-300">About</a>
+                <a href="#contact" class="text-dark-navy hover:text-primary-blue transition duration-300">Contact</a>
+                <a href="#blog" class="text-white bg-primary-blue px-6 py-2 rounded-full hover:bg-dark-navy transition duration-300 shadow-md">Read Blog</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-primary-blue hover:text-dark-navy focus:outline-none">
+                <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 bg-light-slate shadow-lg">
+            <a href="#featured-news" class="block px-3 py-2 rounded-md text-base font-medium text-dark-navy hover:bg-off-white hover:text-primary-blue">News</a>
+            <a href="#entertainment-spotlight" class="block px-3 py-2 rounded-md text-base font-medium text-dark-navy hover:bg-off-white hover:text-primary-blue">Entertainment</a>
+            <a href="#about-us" class="block px-3 py-2 rounded-md text-base font-medium text-dark-navy hover:bg-off-white hover:text-primary-blue">About</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-dark-navy hover:bg-off-white hover:text-primary-blue">Contact</a>
+            <a href="#blog" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-primary-blue hover:bg-dark-navy mt-2">Read Blog</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="relative hero-gradient-bg py-28 md:py-48 text-center text-white overflow-hidden">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative hidden-item" data-delay="0.1">
+                <h1 class="text-6xl sm:text-7xl lg:text-8xl font-heading font-extrabold leading-tight mb-6">
+                    Kumabittv
+                </h1>
+                <p class="text-xl sm:text-2xl font-medium mb-10 max-w-3xl mx-auto opacity-90">
+                    Your daily dose of Entertainment & Trending News, straight from No 8 Idi Oro.
+                </p>
+                <a href="#featured-news"
+                    class="inline-block px-12 py-5 text-xl font-bold text-primary-blue bg-off-white rounded-full shadow-2xl hover:bg-light-slate transform hover:scale-[1.03] transition duration-300">
+                    Explore Latest Stories
+                </a>
+            </div>
+        </section>
+
+        <section id="featured-news" class="py-24 md:py-36 bg-off-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-heading font-bold text-center text-dark-navy mb-16 hidden-item" data-delay="0.1">
+                    Breaking News & Top Stories
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.2">
+                        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?fit=crop&w=600&h=350&q=80" alt="News Reporter" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">Local Events Making Headlines</h3>
+                            <p class="text-gray-700 text-base mb-4">Discover the most impactful local stories and community updates from around Ibadan and beyond.</p>
+                            <a href="https://punchng.com/" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read More
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.4">
+                        <img src="glob1.jpg" alt="Global News" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">Beyond Borders: International News</h3>
+                            <p class="text-gray-700 text-base mb-4">Stay informed on global affairs and how they connect to our local communities.</p>
+                            <a href="https://www.thehindu.com/news/international/" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read More
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.6">
+                        <img src="tech.jpg" alt="Tech News" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">Innovation & Future: Tech Insights</h3>
+                            <p class="text-gray-700 text-base mb-4">Dive into the world of technology and its impact on entertainment and daily life.</p>
+                            <a href="https://www.zdnet.com/" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read More
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="entertainment-spotlight" class="py-24 md:py-36 bg-light-slate text-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-heading font-bold text-dark-navy mb-16 hidden-item" data-delay="0.1">
+                    Your Entertainment Fix
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="text-left hidden-item" data-delay="0.3">
+                        <h3 class="text-4xl font-heading font-bold text-primary-blue mb-4">Music, Movies & More</h3>
+                        <p class="text-lg text-gray-800 leading-relaxed mb-6">
+                            From the hottest new music releases to in-depth movie reviews and celebrity interviews, Kumabittv is your go-to source for everything entertainment.
+                        </p>
+                        <p class="text-lg text-gray-800 leading-relaxed mb-6">
+                            We cover local talents and international sensations, bringing you exclusive content and perspectives.
+                        </p>
+                        <a href="#blog" class="inline-block px-8 py-3 bg-dark-navy text-white rounded-full hover:bg-primary-blue transition duration-300 shadow-lg">
+                            See All Entertainment
+                        </a>
+                    </div>
+                    <div class="hidden-item" data-delay="0.5">
+                        <img src="concert1.jpg" alt="Concert Crowd" class="rounded-xl shadow-2xl w-full h-auto">
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <h3 class="text-4xl font-heading font-bold text-dark-navy mb-8 hidden-item" data-delay="0.7">
+                        Popular Categories
+                    </h3>
+                    <div class="flex flex-wrap justify-center gap-4 hidden-item" data-delay="0.9">
+                        <span class="bg-primary-blue text-white px-5 py-2 rounded-full text-lg font-medium shadow-md">Music Reviews</span>
+                        <span class="bg-primary-blue text-white px-5 py-2 rounded-full text-lg font-medium shadow-md">Film Critiques</span>
+                        <span class="bg-primary-blue text-white px-5 py-2 rounded-full text-lg font-medium shadow-md">Celebrity Buzz</span>
+                        <span class="bg-primary-blue text-white px-5 py-2 rounded-full text-lg font-medium shadow-md">Gaming News</span>
+                        <span class="bg-primary-blue text-white px-5 py-2 rounded-full text-lg font-medium shadow-md">Lifestyle</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about-us" class="py-24 md:py-36 bg-off-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="hidden-item" data-delay="0.1">
+                        <h2 class="text-5xl font-heading font-bold text-dark-navy mb-6">About No 8 Idi Oro</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                            Kumabittv is the digital arm of No 8 Idi Oro, your trusted source for compelling entertainment and up-to-the-minute news. Founded by Kunle Mabo, our mission is to deliver content that informs, engages, and entertains our audience across Ibadan and beyond.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            We believe in accessible, high-quality information and captivating stories. Our team is dedicated to bringing you the best, every single day.
+                        </p>
+                    </div>
+                    <div class="hidden-item" data-delay="0.3">
+                        <img src="team2.webp" alt="Team collaborating" class="rounded-xl shadow-2xl w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="py-24 md:py-36 bg-light-slate">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-5xl font-heading font-bold text-center text-dark-navy mb-16 hidden-item" data-delay="0.1">
+                    Our Latest Posts
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.2">
+                        <img src="article1.webp" alt="Article Image" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">The Rise of Indie Artists in Nigeria</h3>
+                            <p class="text-gray-700 text-base mb-4 line-clamp-3">Explore how independent musicians are reshaping the Nigerian music scene and gaining international recognition.</p>
+                            <a href="https://www.getunruly.com/articles/the-new-alternative-on-nigerias-growing-underground-music-scene" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read Article
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.4">
+                        <img src="article2.jpg" alt="Article Image" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">Analyzing the Latest Blockbuster Releases</h3>
+                            <p class="text-gray-700 text-base mb-4 line-clamp-3">Our take on the biggest movies hitting theaters this season – what to watch and what to skip.</p>
+                            <a href="https://www.theguardian.com/film/2025/sep/29/springsteen-deliver-me-from-nowhere-review-biopic-jeremy-allen-white" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read Article
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden hidden-item" data-delay="0.6">
+                        <img src="article3.jpg" alt="Article Image" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-heading font-semibold text-primary-blue mb-2">Impact of Social Media on Modern Journalism</h3>
+                            <p class="text-gray-700 text-base mb-4 line-clamp-3">A deep dive into how platforms like Twitter and Instagram are changing the news landscape.</p>
+                            <a href="https://www.pewresearch.org/journalism/fact-sheet/social-media-and-news-fact-sheet/" target="_blank" class="text-primary-blue hover:text-dark-navy font-medium flex items-center">
+                                Read Article
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" /></svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="text-center mt-16 hidden-item" data-delay="0.8">
+                    <a href="#blog" class="inline-block px-10 py-4 text-xl font-bold text-white bg-primary-blue rounded-full shadow-lg hover:bg-dark-navy transition duration-300">
+                        View All Articles
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 md:py-36 bg-off-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center hidden-item" data-delay="0.1">
+                <h2 class="text-5xl font-heading font-bold text-dark-navy mb-8">Get in Touch</h2>
+                <p class="text-xl text-gray-700 mb-10">
+                    Have a story idea, feedback, or want to collaborate? Reach out to us!
+                </p>
+                
+                <div class="space-y-6">
+                    <p class="text-xl font-semibold text-primary-blue">
+                        Email: <a href="mailto:Kumabit28@gmail.com" class="text-dark-navy hover:text-primary-blue transition">Kumabit28@gmail.com</a>
+                    </p>
+                    <p class="text-xl font-semibold text-primary-blue">
+                        WhatsApp: <a href="https://wa.me/2348056064776" target="_blank" class="text-dark-navy hover:text-primary-blue transition">+234 8056064776</a>
+                    </p>
+                    <p class="text-xl font-semibold text-primary-blue">
+                        Location: Ibadan, Nigeria
+                    </p>
+                </div>
+
+                <div class="mt-16 hidden-item" data-delay="0.3">
+                    <h3 class="text-3xl font-heading font-bold text-dark-navy mb-6">Send Us a Message</h3>
+                    <form action="#" method="POST" class="space-y-6">
+                        <div>
+                            <input type="text" id="full-name" name="full-name" placeholder="Your Full Name"
+                                class="w-full px-5 py-3 border border-light-slate rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue outline-none text-lg">
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="email" placeholder="Your Email Address"
+                                class="w-full px-5 py-3 border border-light-slate rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue outline-none text-lg">
+                        </div>
+                        <div>
+                            <textarea id="message" name="message" rows="5" placeholder="Your Message"
+                                class="w-full px-5 py-3 border border-light-slate rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue outline-none text-lg"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="inline-block px-10 py-4 text-xl font-bold text-white bg-primary-blue rounded-full shadow-lg hover:bg-dark-navy transition duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-navy text-off-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-primary-blue/50 pb-8 mb-8">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-2">
+                        
+                        <img src="main.png" alt="Kumabittv Logo" class="h-8 w-auto object-contain filter brightness-150">
+                        <span class="text-2xl font-heading font-bold">Kumabittv</span>
+                    </div>
+                    <p class="text-sm text-light-slate">Your prime source for the freshest entertainment and most vital news stories.</p>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-primary-blue mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#featured-news" class="text-off-white hover:text-primary-blue transition">Latest News</a></li>
+                        <li><a href="#entertainment-spotlight" class="text-off-white hover:text-primary-blue transition">Entertainment</a></li>
+                        <li><a href="#about-us" class="text-off-white hover:text-primary-blue transition">About Us</a></li>
+                        <li><a href="#blog" class="text-off-white hover:text-primary-blue transition">Blog</a></li>
+                    </ul>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-primary-blue mb-4 text-lg">Contact Info</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><span class="font-semibold">Email:</span> <a href="mailto:Kumabit28@gmail.com" class="text-off-white hover:text-primary-blue transition">Kumabit28@gmail.com</a></li>
+                        <li><span class="font-semibold">WhatsApp:</span> <a href="https://wa.me/2348056064776" target="_blank" class="text-off-white hover:text-primary-blue transition">+234 8056064776</a></li>
+                        <li><span class="font-semibold">Location:</span> Ibadan, Nigeria</li>
+                    </ul>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-primary-blue mb-4 text-lg">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-off-white hover:text-primary-blue transition" aria-label="Facebook">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14 13.5H16.5L17.5 9.75H14V7.5C14 6.75 14 6.75 14.5 6.75H17.5V3.75H14C11.5 3.75 10 5 10 7.5V9.75H7V13.5H10V20.25H14V13.5Z" /></svg>
+                        </a>
+                        <a href="#" class="text-off-white hover:text-primary-blue transition" aria-label="Twitter">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.8-.36-1.63-.6-2.5-.7.9-.55 1.5-1.4 1.8-2.4-.85.5-1.8.8-2.85.95C18.1 3.5 16.9 3 15.6 3c-2.47 0-4.48 2-4.48 4.47 0 .35.04.7.1 1.05C7.45 8.35 4.7 6.9 2.83 4.6c-.3.5-.47 1-.47 1.6 0 1.55.78 2.92 1.96 3.7c-.72-.02-1.4-.22-2-.58v.05c0 2.16 1.55 3.97 3.6 4.38-.37.1-.75.14-1.15.14-.28 0-.55-.03-.8-.07.57 1.8 2.2 3.1 4.13 3.14-1.54 1.2-3.48 1.92-5.57 1.92-.36 0-.7-.02-1.05-.06 2 1.28 4.38 2.02 6.96 2.02 8.35 0 12.92-6.9 12.92-12.92 0-.2 0-.4-.02-.6.9-.66 1.66-1.5 2.27-2.45z"/></svg>
+                        </a>
+                        <a href="#" class="text-off-white hover:text-primary-blue transition" aria-label="Instagram">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07c3.252.148 4.772 1.69 4.91 4.91.058 1.265.07 1.645.07 4.85s-.012 3.585-.07 4.85c-.138 3.226-1.658 4.746-4.91 4.91-1.265.058-1.645.07-4.85.07s-3.585-.012-4.85-.07c-3.26-.148-4.77-1.69-4.91-4.91-.058-1.265-.07-1.645-.07-4.85s.012-3.585.07-4.85c.14-3.235 1.66-4.75 4.91-4.91 1.265-.058 1.645-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072C2.79 0.536 0.536 2.79 0.072 5.053.014 6.333 0 6.741 0 10s.014 3.668.072 4.947c.464 2.262 2.718 4.516 4.981 4.981 1.28.058 1.688.072 4.947.072s3.668-.014 4.947-.072c2.262-.464 4.516-2.718 4.981-4.981.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.464-2.262-2.718-4.516-4.981-4.981C15.667.014 15.259 0 12 0zm0 4.865a7.135 7.135 0 100 14.27 7.135 7.135 0 000-14.27zM12 16c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4zm7.135-9.3c0-.825-.67-1.495-1.495-1.495-.825 0-1.495.67-1.495 1.495 0 .825.67 1.495 1.495 1.495.825 0 1.495-.67 1.495-1.495z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="text-center text-sm text-gray-400 mt-8 flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <span>&copy; <span id="current-year"></span> Kumabittv. All rights reserved.</span>
+                <span class="hidden sm:inline">|</span> 
+                <a href="https://www.talentronaut.in/" target="_blank" 
+                   class="text-primary-blue hover:text-light-slate font-semibold transition duration-300 inline-flex items-center space-x-1">
+                    <span>Designed by Talentronaut Technologies</span>
+                    
+                    <img src="logo.jpg" alt="Talentronauts Logo" class="footer-talentronaut-logo">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set Current Year in Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Toggle Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // SCROLL REVEAL LOGIC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || '0s';
+                    entry.target.style.transitionDelay = delay;
+                    entry.target.classList.add('show-item');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1, 
+            rootMargin: '0px 0px -50px 0px' 
+        });
+
+        document.querySelectorAll('.hidden-item').forEach((element) => {
+            observer.observe(element);
+        });
+
+        // Initialize Hero section immediately as it's typically always visible
+        document.querySelector('#hero .hidden-item').classList.add('show-item');
+    </script>
+</body>
+</html>
